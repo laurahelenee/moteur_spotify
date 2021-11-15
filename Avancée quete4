@@ -1,0 +1,59 @@
+###AVANCEE QUETE 4
+
+
+import pandas as pd
+dat = pd.read_csv("/Users/rcanivez/Documents/Final database.csv")
+dot_quete4=dat['Album/Single']=='album'
+doti_quete4 = dat[dot_quete4]
+doti_quete4
+
+artistes = list(dat['Artist'])
+artist = []
+for i in artistes:
+    if i not in artist:
+        artist.append(i)
+print(artist)
+#transformation des artistes en une liste (utile pour la fonction plus tard
+
+dotii_quete4=doti_quete4['Country']=='Global'
+dotiii_quete4 = doti_quete4[dotii_quete4]
+dotiii_quete4
+#On vire les singles qui compliquent tout et on teste d'abord only sur Global
+
+dofi = dotiii_quete4.groupby(['Album']).sum().reset_index()
+#on fait la somme des popu pour chaque album
+
+dofi =dofi.sort_values(by=['Popularity'], ascending=[False])
+dofi
+#on trie par popularité 
+
+dofi.rename(columns={'Popularity': 'Somme des popularités'}, inplace=True)
+dofi
+#on renomme la colonne popularité par son vrai nom : somme des popu'
+
+dopalo = pd.DataFrame(dofi)
+dopalo.drop(dopalo.iloc[:,2:150],1,inplace=True)
+dopalo
+#on vire les colonnes inutiles çad tt le reste à part somme des popu et album
+
+output4 = pd.merge(dotiii_quete4, dopalo,  
+                   on=['Album'],  
+                   how='left') 
+  
+output4
+
+output4 = output4.sort_values(by=['Popularity'], ascending=[False])
+output4
+#on fusionne les deux documents par l'album pour mettre la somme des popularités dans le fichier dat (enfin qqch du genre)
+artiste = input("Artiste : ")
+def quete4(artiste):
+    if artiste in artist:
+        mycolumns = ['Album','Somme des popularités']
+        quete4=output4.loc[(output4['Artist']==artiste)]
+        print(quete4[mycolumns].head(1))
+    return
+
+quete4(artiste)
+
+#fonction qui ne fonctionne que pr faire apparaître l'album le plus populaire de l'artiste sur tt la période
+##Pour avoir les singles les plus populaires mêmes principes avec titre et popularity (mais pas DANS l'album :c)
