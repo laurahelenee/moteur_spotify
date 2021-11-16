@@ -1,0 +1,176 @@
+import notrescript as NS 
+import tkinter as tk
+from tkinter.scrolledtext import ScrolledText as ScrolledText
+
+
+fenetre = tk.Tk() # Creates a tkinter object
+label = tk.Label(fenetre, text="Bienvenue sur l'interface")
+label.pack()  #organise les widgets en blocks avant de les placer dans yn widget "parent"
+
+
+
+def action_1(): 
+    text_area.config(state="normal") 
+    text_area.delete(1.0,tk.END) 
+    text_area.insert(tk.INSERT,NS.quete1(arg_1.get(), arg_2.get())) #la fonction quete1 est une fonction à 2 entrées donc prend 2 arguments
+    text_area.configure(state='disabled') #this is to make the Tkinter Text widget read-only (otherwise the user could edit, append, insert or edit text content in it)
+
+
+def action_2():
+    text_area.config(state="normal")
+    text_area.delete(1.0,tk.END) #delete scrolledtext content
+    text_area.insert(tk.INSERT,NS.quete2(arg_3.get(), arg_4.get(), str(arg_5.get())))
+    text_area.configure(state='disabled')
+    
+    
+def action_3():
+    text_area.config(state="normal")
+    text_area.delete(1.0,tk.END)
+    text_area.insert(tk.INSERT,NS.quete3(arg_6.get(), arg_6.get(), int(arg_7.get()))) #je mets l'argument "année" en int, bien verifier que ca corresponde bien au 3eme input dans la fonction dans le script
+    text_area.configure(state='disabled')
+
+
+    
+def action_4():
+    text_area.config(state="normal")
+    text_area.delete(1.0,tk.END)
+    text_area.insert(tk.INSERT,NS.quete4(arg_8.get()))
+    text_area.configure(state='disabled')
+    
+    
+### Frame 1  : menu des actions possibles  
+### Scrollable frame
+frame1 = tk.Frame(fenetre) #le Frame est un container qui arrange la position des autres widgets
+canvas = tk.Canvas(frame1,width=200, height=600) #Canvas: rectangle pour placer qqch dedans 
+scrollbar = tk.Scrollbar(frame1, orient="vertical", command=canvas.yview) #la barre va être verticale
+scrollFrame = tk.Frame(canvas,borderwidth=0, relief=tk.GROOVE)
+
+scrollFrame.bind(
+    "<Configure>",
+    lambda e: canvas.configure(
+        scrollregion=canvas.bbox("all")
+    )
+)
+
+canvas.create_window((0, 0), window=scrollFrame, anchor="center") #anchor: pour definir où le texte est positionné: (nw: North West)
+
+canvas.configure(yscrollcommand=scrollbar.set) 
+
+frame1.pack(side=tk.LEFT, padx=10, pady=10) #padx: taille à gauche et à droite, pady: taille en haut et en bas du texte
+
+canvas.pack(side="left", fill="both", expand=True) 
+scrollbar.pack(side="right", fill="y")
+
+
+### fonction quete1, inputs: titre de chanson et artiste 
+framef1 = tk.Frame(scrollFrame, borderwidth=2, highlightthickness=3, highlightbackground="pink", relief=tk.GROOVE)
+framef1.pack(side=tk.TOP, padx=1, pady=1)
+
+
+label = tk.Label(framef1, text="quete1")
+label.pack()
+
+label = tk.Label(framef1, text="Titre de chanson")
+label.pack()
+arg_1 = tk.Entry(framef1, width=30) # argument de la fonction 
+arg_1.pack()
+
+label = tk.Label(framef1, text="Nom de l'artiste")
+label.pack()
+arg_2 = tk.Entry(framef1, width=30) 
+arg_2.pack()
+
+bouton_f1 = tk.Button(framef1, text="Rechercher", command=action_1) #crée un boutton avec le texte "Rechercher" dessus 
+bouton_f1.pack()
+
+
+### fonction quete2, inputs: artiste, pays, année
+framef2 = tk.Frame(scrollFrame, borderwidth=2,highlightthickness=3, highlightbackground="purple", relief=tk.GROOVE) #à la place de GROOVE on peut aussi utiliser FLAT, RAISED, SUNKEN, ou RIDGE (c'est le relief du boutton)
+framef2.pack(side=tk.TOP, padx=1, pady=1)     
+
+label = tk.Label(framef2, text="quete2")
+label.pack()
+
+label = tk.Label(framef2, text="Nom de l'artiste")
+label.pack()
+arg_3 = tk.Entry(framef2, width=30) 
+arg_3.pack()
+
+label = tk.Label(framef2, text="Pays")
+label.pack()
+arg_4 = tk.Entry(framef2, width=30)
+arg_4.pack()
+
+label = tk.Label(framef2, text="Année")
+label.pack()
+arg_5 = tk.Entry(framef2, width=30)
+arg_5.pack()
+
+bouton_f2 = tk.Button(framef2, text="Rechercher", command=action_2)
+bouton_f2.pack()
+
+
+### fonction quete3, inputs: genre, pays, année
+framef3 = tk.Frame(scrollFrame, borderwidth=2, highlightthickness=3, highlightbackground="red",relief=tk.GROOVE)
+framef3.pack(side=tk.TOP, padx=1, pady=1)   
+  
+label = tk.Label(framef3, text="quete3")
+label.pack()
+
+label = tk.Label(framef3, text="Genre")
+label.pack()
+arg_6 = tk.Entry(framef3, width=30)
+arg_6.pack()
+
+label = tk.Label(framef3, text="Pays")
+label.pack()
+arg_7 = tk.Entry(framef3, width=30)
+arg_7.pack()
+
+label = tk.Label(framef3, text="Année")
+label.pack()
+arg_8 = tk.Entry(framef3, width=30)
+arg_8.pack()
+
+bouton_f3 = tk.Button(framef3, text="Rechercher", command=action_3)
+bouton_f3.pack()
+
+
+
+
+### fonction quete4: input: artiste
+framef5 = tk.Frame(scrollFrame, borderwidth=2, highlightthickness=3, highlightbackground="blue", relief=tk.GROOVE)
+framef5.pack(side=tk.TOP, padx=1, pady=1)     
+
+label = tk.Label(framef5, text="quete4")
+label.pack()
+
+label = tk.Label(framef5, text="Nom de l'artiste")
+label.pack()
+arg_9 = tk.Entry(framef5, width=30)
+arg_9.pack()
+
+bouton_f5 = tk.Button(framef5, text="Rechercher", command=action_4)
+bouton_f5.pack()
+
+
+
+
+### Frame 2 : affichage du résultat #♣corriger cette partie
+
+frame2 = tk.Frame(fenetre, borderwidth=2, relief=tk.GROOVE) 
+frame2.pack(side=tk.TOP, padx=10, pady=10)
+text_area = ScrolledText(frame2, width = 850,  height = 1000) 
+text_area.config(state="normal")
+text_default = """Votre résultat sera affiché ici !
+            \nMerci de bien respecter les majuscules lorsqu'il s'agit de noms d'acteurs.
+            \nDescriptions des fonctionnalités:
+            \n-> quete1 indique dans quels pays la chanson a été classée ainsi que si cette chanson a déjà été classée dans le classement global.
+            \n-> quete2 indique combien de ses chansons ont été classées dans le classement du pays entré, pendant l’année donnée ainsi que la liste des chansons ordonnées par popularité.
+            \n-> quete3 indique les 10 chansons les plus populaires cette année là, puis les 10 artistes les plus populaires pour cette même année pour le genre mentionné, dans le pays en question avec, pour chaque artiste, son nombre d’abonnés sur Spotify.
+            \n-> quete4 indique, pour l'artiste saisi, l’album le plus populaire par année avec les 3 chansons les plus populaires de l’album. """
+text_area.insert(tk.INSERT,text_default)
+text_area.configure(state='disabled')
+text_area.pack()
+fenetre.mainloop()
+
