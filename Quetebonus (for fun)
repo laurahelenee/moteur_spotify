@@ -1,0 +1,66 @@
+import pandas as pd
+dat = pd.read_csv("/Users/rcanivez/Documents/Final database.csv")
+dt = pd.read_csv("/Users/rcanivez/Documents/Database to calculate popularity.csv")
+
+#dt - popularity
+dop = pd.DataFrame(dat)
+dop.drop(dop.iloc[:,15:147],1,inplace=True)
+dop
+
+dt.rename(columns={'uri': 'Uri'}, inplace=True)
+dt.rename(columns={'country': 'Country'}, inplace=True)
+dt
+
+output3 = pd.merge(dt, dop,  
+                   on=['Country','Uri'],  
+                   how='left') 
+  
+output3
+#merge classique
+
+output3['Release_date']=output3['Release_date'].str[:4]
+#Pour ne conserver que les années des Release_date
+
+####quetebonus le retour - Version année de naissannce
+
+#quetebonus qui fait apparaitre les 5 chansons les plus populaires publiées durant l'année de votre naissance (popularité)
+#qqsoit le pays
+releasedate = input("Entrez votre année de naissance : ")
+
+
+def quetebonus(releasedate):
+    if releasedate in list(output3.Release_date):
+        quetebonus=output3.loc[(output3['Release_date']==releasedate)]
+        quetebonus=quetebonus.sort_values(by=['Popularity'], ascending=[False])
+        mycols = ['title','artist','Popularity','Country']
+        queteebonus = quetebonus[mycols].drop_duplicates()
+        print(queteebonus.head(5))
+              
+    else: print("Aucun titre publié durant votre année de naissance n'a été classé dans notre classement :/")
+    return
+quetebonus(releasedate)
+#marche :D
+
+
+###Version jour de naissance (mais c'est un peu bizarre car peu de chances qu'un jour pile soit classé)
+#Ajouter : 'Popu_max','Country' pour le truc de Laura -> problème de doublons (car plusieurs popu max si classé
+#dans plusieurs pays)
+
+output5 = pd.merge(dt, dop,  
+                   on=['Country','Uri'],  
+                   how='left') 
+  
+output5
+
+releasedate = input("Entrez votre date d'anniversaire : (format : AAAA-MM-JJ) ")
+def quetebonus(releasedate):
+    if releasedate in list(output5.Release_date):
+        quetebonus=output5.loc[(output5['Release_date']==releasedate)]
+        quetebonus=quetebonus.sort_values(by=['Popularity'], ascending=[False])
+        mycols = ['title','artist','Popu_max','Country']
+        queteebonus = quetebonus[mycols].drop_duplicates()
+        print(queteebonus.head(5))
+              
+    else: print("Aucun titre publié le jour de votre anniversaire n'a été classé dans notre classement :/")
+    return
+quetebonus(releasedate)
