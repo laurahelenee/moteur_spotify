@@ -1,0 +1,173 @@
+######Q2 (pas fini)
+import pandas as pd
+
+dt = pd.read_csv("/Users/rcanivez/Documents/Database to calculate popularity.csv")
+dat = pd.read_csv("/Users/rcanivez/Documents/Final database.csv")
+#on crée deux dataframes dans lesquelles on enregistre nos deux bases de données 
+
+
+dat2 = pd.DataFrame(dat)
+dat2.drop(dop.iloc[:,10:150],1,inplace=True)
+dat2
+#on enlève les colonnes qui ne nous seront pas utiles pour répondre à cette question
+
+dt.rename(columns={'uri': 'Uri'}, inplace=True)
+dt.rename(columns={'country': 'Country'}, inplace=True)
+dt
+#on renomme ajoute des majuscules à deux de nos colonnes : en faisant cela, on prépare une jointure entre les deux
+#bases de données par une clef de jointure composée à la fois de Country et Uri (ce qui n'est possible 
+#que si les deux colonnes ont le même titre)
+
+dt_dat = pd.merge(dt, dat2,  
+                   on=['Country','Uri'],  
+                   how='left') 
+  
+dt_dat
+#on réalise une jointure composée ers la gauche entre nos deux bases de données en se basant sur une clef de jointure
+#qui a donc pour deux composants "Uri" (pour différencier les chansons et "Country" (pour différencier les mêmes chansons
+#classées dans plusieurs pays)
+
+dt_dat2=dt_dat['position']<=10.0
+filtered_dt_dat = dt_dat[dt_dat2]
+filtered_dt_dat
+#On élimine l'ensemble des titres qui ne sont pas dans le top10 d'un classement tous pays confondus 
+#cela va nous permettre de classer les différents genres entre eux : plus un titre a de top10, plus il est populaire
+
+filtered_dt_dat['date']=filtered_dt_dat['date'].str[6:]
+filtered_dt_dat
+#on modifie supprime les 6 premières valeurs de la colonne date : une fois cela fait, on pourra différencier 
+#les différents titres selon les années dans lesquelles ils ont été classés
+
+filtered_dt_dat3=filtered_dt_dat['date']==str(2017)
+filtered_dt_dat2017 = filtered_dt_dat[filtered_dt_dat3]
+filtered_dt_dat2017
+
+filtered_dt_dat2=filtered_dt_dat['date']==str(2018)
+filtered_dt_dat2018 = filtered_dt_dat[filtered_dt_dat2]
+filtered_dt_dat2018
+
+filtered_dt_dat4=filtered_dt_dat['date']==str(2019)
+filtered_dt_dat2019 = filtered_dt_dat[filtered_dt_dat4]
+filtered_dt_dat2019
+
+filtered_dt_dat5=filtered_dt_dat['date']==str(2020)
+filtered_dt_dat2020 = filtered_dt_dat[filtered_dt_dat5]
+filtered_dt_dat2020
+#on crée différentes dataframes dans lesquelles on enregistre respectivement toutes les chansons classées
+#d'une certaine année
+
+dt_dat['Cluster'].value_counts()
+#Cela nous permet de savoir que les zones géographiques sont séparés en 4 clusters : spanish speaking / english speaking
+#and nordic / southern europe and portuguese heritage et global
+
+#On doit donc séparer chacune de ces dataframes en fonction de leur cluster
+#On commence alors par l'année 2017
+filtered_dt_dat2017_2=filtered_dt_dat2017['Cluster']==str('spanish speaking')
+filtered_dt_dat2017_spanisk_speaking = filtered_dt_dat2017[filtered_dt_dat2017_2]
+filtered_dt_dat2017_spanisk_speaking
+
+filtered_dt_dat2017_3=filtered_dt_dat2017['Cluster']==str('english speaking and nordic')
+filtered_dt_dat2017_english_speaking_and_nordic = filtered_dt_dat2017[filtered_dt_dat2017_3]
+filtered_dt_dat2017_english_speaking_and_nordic
+
+filtered_dt_dat2017_4=filtered_dt_dat2017['Cluster']==str('southern europe and portuguese heritage')
+filtered_dt_dat2017_southern_europe_and_portuguese_heritage = filtered_dt_dat2017[filtered_dt_dat2017_4]
+filtered_dt_dat2017_southern_europe_and_portuguese_heritage
+
+filtered_dt_dat2017_5=filtered_dt_dat2017['Cluster']==str('global')
+filtered_dt_dat2017_global = filtered_dt_dat2017[filtered_dt_dat2017_5]
+filtered_dt_dat2017_global
+
+spanish_speaking2017 = filtered_dt_dat2017_spanisk_speaking['Genre'].value_counts().to_frame().reset_index()
+english_speaking_and_nordic2017 = filtered_dt_dat2017_english_speaking_and_nordic['Genre'].value_counts().to_frame().reset_index()
+southern_europe_and_portuguese_heritage2017 = filtered_dt_dat2017_southern_europe_and_portuguese_heritage['Genre'].value_counts().to_frame().reset_index()
+global2017 = filtered_dt_dat2017_global['Genre'].value_counts().to_frame().reset_index()
+#on enregistre alors dans de nouvelles variables le dénombrement de l'occurence de chaque genre dans chacun des documents 
+#en faisant cela, on va voir quels sont les genres qui ont le plus de titres passées dans le top10 pour chaque cluster.
+
+spanish_speaking2017.rename(columns={'Genre': 'Comptabilisation du nombre de top10'}, inplace=True)
+spanish_speaking2017.rename(columns={'index': 'Genre'}, inplace=True)
+spanish_speaking2017
+
+english_speaking_and_nordic2017.rename(columns={'Genre': 'Comptabilisation du nombre de top10'}, inplace=True)
+english_speaking_and_nordic2017.rename(columns={'index': 'Genre'}, inplace=True)
+english_speaking_and_nordic2017
+
+southern_europe_and_portuguese_heritage2017.rename(columns={'Genre': 'Comptabilisation du nombre de top10'}, inplace=True)
+southern_europe_and_portuguese_heritage2017.rename(columns={'index': 'Genre'}, inplace=True)
+southern_europe_and_portuguese_heritage2017
+
+global2017.rename(columns={'Genre': 'Comptabilisation du nombre de top10'}, inplace=True)
+global2017.rename(columns={'index': 'Genre'}, inplace=True)
+global2017
+#on modifie ici le nom des colonnes de sorte à avoir quelque chose de plus clair : on obtient, pour chaque genre,
+#le nombre de jours passées par tous les titres de ce genre dans le top10 de tous nos classements confondus.
+
+#on va alors modifier nos nouvelles dataframes : on ne va conserver que les 10 premières valeurs pour conserver un graphique
+#lisible.
+spanish_speaking2017 = spanish_speaking2017.head(10)
+english_speaking_and_nordic2017 = english_speaking_and_nordic2017.head(10)
+southern_europe_and_portuguese_heritage2017 = southern_europe_and_portuguese_heritage2017.head(10)
+global2017 = global2017.head(10)
+
+#on peut alors enfin passer à la réalisation de nos diagrammes circulaires pour chacun des clusters de l'année 2017
+import matplotlib.pyplot as plt
+
+
+plt.pie(spanish_speaking2017['Comptabilisation du nombre de top10'], labels=spanish_speaking2017['Genre'])
+plt.title('Distribution des genres du cluster "spanish speaking" en 2017')
+plt.show
+
+plt.pie(english_speaking_and_nordic2017['Comptabilisation du nombre de top10'], labels=english_speaking_and_nordic2017['Genre'])
+plt.title('Distribution des genres du cluster "english speaking and nordic" en 2017')
+plt.show
+
+plt.pie(southern_europe_and_portuguese_heritage2017['Comptabilisation du nombre de top10'], labels=southern_europe_and_portuguese_heritage2017['Genre'])
+plt.title('Distribution des genres du cluster "southern europe and portuguese" en 2017')
+plt.show
+
+plt.pie(global2017['Comptabilisation du nombre de top10'], labels=global2017['Genre'])
+plt.title('Distribution des genres du cluster "global" en 2017')
+plt.show
+
+################Q3
+dat = dat.sort_values(by=['Popularity'], ascending=[True])
+#on trie notre document par ordre décroissant pour que les titres les plus populaires soient en haut du document
+
+#on se base sur un dot trié par popularité mais ça a aucune incidence sur le résultat final -> on peut en changer.
+dat_q3=dat['Top50_dummy']==1.0
+filtered_dat_bytop50 = dot[dat_q3]
+filtered_dat_bytop50
+
+dat_q3_2=dat['Top10_dummy']==1.0
+filtered_dat_bytop10 = dot[dat_q3_2]
+filtered_dat_bytop10
+#on ne conserve que les données du document global qui ont déjà atteint le top50 puis le top10 tous classements confondus
+
+value_count_filtered_dat_bytop50 = filtered_dat_bytop50['Artist'].value_counts()
+value_count_filtered_dat_bytop10 = filtered_dat_bytop10['Artist'].value_counts()
+#on enregistre dans les dataframes respectives
+#le décompte du nombre d'occurences de chaque artiste dans nos documents (ce qui correspond respectivement au nombre
+#titres que chaque artiste présent dans cette liste ont déjà atteint respectivement le top10 ou le top50 tous classements
+#confondus)
+
+#on peut alors faire apparaitre les 10 artistes qui dominent ces deux décomptes comme demandé
+value_count_filtered_dat_bytop50.head(10)
+value_count_filtered_dat_bytop10.head(10)
+
+#On peut alors faire la même chose pour le classement français comme demandé, en filtrant la base de données initiale de 
+#telle sorte à ne conserver que le classement français
+dat_q3_FR=dat['Country']=='France'
+filtered_dat_byFR = dat[dat_q3_FR]
+
+dat_q3_FR=filtered_dat_byFR['Top50_dummy']==1.0
+filtered_dat_bytop50_FR = filtered_dat_byFR[dat_q3_FR]
+
+dat_q3_FR_2=filtered_dat_byFR['Top10_dummy']==1.0
+filtered_dat_bytop10_FR = filtered_dat_byFR[dat_q3_FR_2]
+
+value_count_filtered_dat_bytop50_FR = filtered_dat_bytop50_FR['Artist'].value_counts()
+value_count_filtered_dat_bytop10_FR = filtered_dat_bytop10_FR['Artist'].value_counts()
+
+value_count_filtered_dat_bytop50_FR.head(10)
+value_count_filtered_dat_bytop10_FR.head(10)
