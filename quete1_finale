@@ -36,5 +36,5 @@ def quete1(titre,artiste):
             return "La position la plus haute du titre dans les classements {} et il atteint cette position dans les pays suivants :{}".format(a1, pays_top_position2), "La chanson a été classée dans les pays suivants {}".format(pays_de_classement), " La chanson n'a pas été classée mondialement"
         
     else: 
-        return "La quête n'est pas disponible dans la base de données
+        return "La quête n'est pas disponible dans la base de données."
     
