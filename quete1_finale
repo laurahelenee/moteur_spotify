@@ -1,0 +1,40 @@
+
+def quete1(titre,artiste): 
+    
+    if titre in list(output2.Title) and artiste in list(output2.Artist): #Si le titre au final est classé dans la base de données
+        quete1=output2.loc[(output2['Title']==titre) & (output2['Artist']==artiste)] #On localise dans la dataframe
+        quete1=quete1.sort_values(by=['Popu_max'], ascending=[True]) #On trie par popularité maximum
+        quete1=quete1.drop(columns=['Unnamed: 0','Uri','track','Album/Single','Explicit','Genre','Top10_dummy','Top50_dummy','Cluster','danceability','energy','Release_date'])
+        #a1 = position la plus haute dans le classement
+        a1= list(quete1['Popu_max'])[0] 
+        
+        pays_top_position = []
+        for i in range(0, len(list(quete1['Popu_max']))):
+            if list(quete1['Popu_max'])[i] == a1:
+                pays_top_position.append(list(quete1['Country'])[i])
+        
+        #enlevons les doublons:
+        pays_top_position2 = []
+        for element in pays_top_position:
+            if element not in pays_top_position2:
+                pays_top_position2.append(element)
+                
+        pays_top_position2 = str(pays_top_position2).strip('[]')
+        
+        pays = list(quete1['Country'])
+        country = []
+        for i in pays:
+            if i not in country:
+                country.append(i)
+        country.sort()
+        pays_de_classement = str(country).strip('[]')
+
+        if 'Global' in country:
+            return "La position la plus haute du titre dans les classements {} et il atteint cette position dans les pays suivants :{}".format(a1, pays_top_position2), "La chanson a été classée dans les pays suivants {}".format(pays_de_classement), "La chanson a été classée mondialement"
+
+        else: 
+            return "La position la plus haute du titre dans les classements {} et il atteint cette position dans les pays suivants :{}".format(a1, pays_top_position2), "La chanson a été classée dans les pays suivants {}".format(pays_de_classement), " La chanson n'a pas été classée mondialement"
+        
+    else: 
+        return "La quête n'est pas disponible dans la base de données
+    
