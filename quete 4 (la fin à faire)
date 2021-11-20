@@ -1,0 +1,59 @@
+def quete4(artiste, pays):
+    
+
+    artist_minuscules = []
+    for i in range(0, len(artist)): #parcourt les artistes
+        artist_minuscules.append(artist[i].lower())
+
+
+    #on transforme ce qui est saisi en minuscules
+    artiste = artiste.lower()
+    if artiste in artist_minuscules and pays in Pays:
+        
+        dotii_quete4=doti_quete4['Country']== pays #doti_quete4 a 93703 lignes 
+        dotiii_quete4 = doti_quete4[dotii_quete4] #dotiii_quete4 a 4665 lignes car on a gardÃ© que le pays qu'on cherche
+        
+        dofi = dotiii_quete4.groupby(['Album']).sum().reset_index()
+        #on fait la somme des popu pour chaque album
+        
+        dofi = dofi.sort_values(by=['Popularity'], ascending=[False])
+        #on trie par popularitÃ© 
+        
+        dofi.rename(columns={'Popularity': 'Somme des popularitÃ©s'}, inplace=True)
+        #on renomme la colonne popularitÃ© par son vrai nom : somme des popu'
+        
+        dopalo = pd.DataFrame(dofi)
+        dopalo.drop(dopalo.iloc[:,2:150],1,inplace=True)
+        #on vire les colonnes inutiles Ã§ad tt le reste Ã  part somme des popu et album
+        
+        output4 = pd.merge(dotiii_quete4, dopalo,  
+                           on=['Album'],  
+                           how='left') 
+        
+        output4 = output4.sort_values(by=['Popularity'], ascending=[False])
+        
+        
+        mycolumns = ['Album', 'Somme des popularitÃ©s']
+        
+        #on doit mettre output4['Artist'] en minuscule pour pouvoir tester la condition avant la ligne album_lpp
+        
+        for i in range(0, len(output4['Artist'])): 
+            output4['Artist'][i] = output4['Artist'][i].lower()
+
+        
+        quete4=output4.loc[(output4['Artist']==artiste) & (output4['Country']==pays)] ##here
+        #print(quete4[mycolumns]) #: indices + 3 colonnes : 1 pour album, 1 pour pays et 1 pour somme des popularitÃ©s
+        album_lpp = list(quete4[mycolumns]['Album'])[0]
+        chansons = []
+        for i in range (0, len(list(output4['Title']))-1):
+            if list(output4['Album'])[i] == album_lpp: 
+                chansons.append(list(output4['Title'])[i]) 
+            else:
+                pass
+    
+        les_3_chansons_lpp = chansons[0:3]
+        return album_lpp, les_3_chansons_lpp
+        
+    else:
+        return "L'artiste n'est pas dans la base de donnÃ©e."
+
