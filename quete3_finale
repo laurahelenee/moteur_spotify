@@ -1,0 +1,20 @@
+def quete3(genre,pays,annee):
+
+    if genre in list(output2.Genre) and pays in list(output2.Country) and annee in list(output2.date):
+        quete3=output2.loc[(output2['Genre']==genre) & (output2['Country']==pays) & (output2['date']==annee)]
+        quete3=quete3.sort_values(by=['Popularity'], ascending=[False])
+        quete3=quete3.drop_duplicates(subset="Title") #suppression des doublons 
+        mycolumns=["position","title","artist"]
+        a1 = "Les 10 chansons les plus populaires pour le genre " + genre +  " lors de l'année " + str(annee) + " sont les suivants" 
+        a2= list(quete3[mycolumns]['title'])[0:10]
+        
+        
+        quete3pt2=quete3.sort_values(by=['Popularity'], ascending=[False])
+        quete3pt2=quete3pt2.drop_duplicates(subset="Artist")
+        mycolumn=["Artist","Artist_followers"]
+        a3 = "Les 10 artistes les plus populaires pour le genre " + genre +  " lors de l'année " + str(annee) + " sont les suivants"
+        a4 = list(quete3pt2[mycolumn]['Artist'])[0:10]
+        return a1, a2, a3, a4
+        
+    else: 
+        return "La quête n'est pas disponible dans la base de données"
