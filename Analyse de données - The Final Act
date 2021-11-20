@@ -197,6 +197,66 @@ plt.pie(global2018['Comptabilisation du nombre de top10'], labels=global2018['Ge
 plt.title('Distribution des genres du cluster "global" en 2018')
 plt.show
 
+filtered_dt_dat3=filtered_dt_dat['date']==str(2019)
+filtered_dt_dat2019 = filtered_dt_dat[filtered_dt_dat3]
+filtered_dt_dat2019
+
+filtered_dt_dat2019_2=filtered_dt_dat2019['Cluster']==str('spanish speaking')
+filtered_dt_dat2019_spanisk_speaking = filtered_dt_dat2019[filtered_dt_dat2019_2]
+
+filtered_dt_dat2019_3=filtered_dt_dat2019['Cluster']==str('english speaking and nordic')
+filtered_dt_dat2019_english_speaking_and_nordic = filtered_dt_dat2019[filtered_dt_dat2019_3]
+
+filtered_dt_dat2019_4=filtered_dt_dat2019['Cluster']==str('southern europe and portuguese heritage')
+filtered_dt_dat2019_southern_europe_and_portuguese_heritage = filtered_dt_dat2019[filtered_dt_dat2019_4]
+
+filtered_dt_dat2019_5=filtered_dt_dat2019['Cluster']==str('global')
+filtered_dt_dat2019_global = filtered_dt_dat2019[filtered_dt_dat2019_5]
+filtered_dt_dat2019_global
+
+spanish_speaking2019 = filtered_dt_dat2019_spanisk_speaking['Genre'].value_counts().to_frame().reset_index()
+english_speaking_and_nordic2019 = filtered_dt_dat2019_english_speaking_and_nordic['Genre'].value_counts().to_frame().reset_index()
+southern_europe_and_portuguese_heritage2019 = filtered_dt_dat2019_southern_europe_and_portuguese_heritage['Genre'].value_counts().to_frame().reset_index()
+global2019 = filtered_dt_dat2019_global['Genre'].value_counts().to_frame().reset_index()
+#on enregistre alors dans de nouvelles variables le dénombrement de l'occurence de chaque genre dans chacun des documents 
+#en faisant cela, on va voir quels sont les genres qui ont le plus de titres passées dans le top10 pour chaque cluster.
+
+spanish_speaking2019.rename(columns={'Genre': 'Comptabilisation du nombre de top10'}, inplace=True)
+spanish_speaking2019.rename(columns={'index': 'Genre'}, inplace=True)
+
+
+english_speaking_and_nordic2019.rename(columns={'Genre': 'Comptabilisation du nombre de top10'}, inplace=True)
+english_speaking_and_nordic2019.rename(columns={'index': 'Genre'}, inplace=True)
+
+southern_europe_and_portuguese_heritage2019.rename(columns={'Genre': 'Comptabilisation du nombre de top10'}, inplace=True)
+southern_europe_and_portuguese_heritage2019.rename(columns={'index': 'Genre'}, inplace=True)
+southern_europe_and_portuguese_heritage2019
+
+global2019.rename(columns={'Genre': 'Comptabilisation du nombre de top10'}, inplace=True)
+global2019.rename(columns={'index': 'Genre'}, inplace=True)
+global2019
+
+spanish_speaking2019 = spanish_speaking2019.head(10)
+english_speaking_and_nordic2019 = english_speaking_and_nordic2019.head(10)
+southern_europe_and_portuguese_heritage2019 = southern_europe_and_portuguese_heritage2019.head(10)
+global2019 = global2019.head(10)
+
+plt.pie(spanish_speaking2019['Comptabilisation du nombre de top10'], labels=spanish_speaking2019['Genre'])
+plt.title('Distribution des genres du cluster "spanish speaking" en 2019')
+plt.show
+
+plt.pie(english_speaking_and_nordic2019['Comptabilisation du nombre de top10'], labels=english_speaking_and_nordic2019['Genre'])
+plt.title('Distribution des genres du cluster "english speaking and nordic" en 2019')
+plt.show
+
+plt.pie(southern_europe_and_portuguese_heritage2019['Comptabilisation du nombre de top10'], labels=southern_europe_and_portuguese_heritage2019['Genre'])
+plt.title('Distribution des genres du cluster "southern europe and portuguese" en 2019')
+plt.show
+
+plt.pie(global2019['Comptabilisation du nombre de top10'], labels=global2019['Genre'])
+plt.title('Distribution des genres du cluster "global" en 2019')
+plt.show
+
 ################Q3
 dat = dat.sort_values(by=['Popularity'], ascending=[True])
 #on trie notre document par ordre décroissant pour que les titres les plus populaires soient en haut du document
