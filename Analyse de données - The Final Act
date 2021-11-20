@@ -7,7 +7,7 @@ dat = pd.read_csv("/Users/rcanivez/Documents/Final database.csv")
 
 
 dat2 = pd.DataFrame(dat)
-dat2.drop(dop.iloc[:,10:150],1,inplace=True)
+dat2.drop(dat2.iloc[:,10:150],1,inplace=True)
 dat2
 #on enlève les colonnes qui ne nous seront pas utiles pour répondre à cette question
 
@@ -130,8 +130,7 @@ plt.pie(global2017['Comptabilisation du nombre de top10'], labels=global2017['Ge
 plt.title('Distribution des genres du cluster "global" en 2017')
 plt.show
 
-filtered_dt_dat['date']=filtered_dt_dat['date'].str[6:]
-filtered_dt_dat
+
 
 filtered_dt_dat2=filtered_dt_dat['date']==str(2018)
 filtered_dt_dat2018 = filtered_dt_dat[filtered_dt_dat2]
@@ -263,9 +262,6 @@ filtered_dt_dat2020
 #on crée différentes dataframes dans lesquelles on enregistre respectivement toutes les chansons classées
 #d'une certaine année
 
-dt_dat['Cluster'].value_counts()
-#Cela nous permet de savoir que les zones géographiques sont séparés en 4 clusters : spanish speaking / english speaking
-#and nordic / southern europe and portuguese heritage et global
 
 #On doit donc séparer chacune de ces dataframes en fonction de leur cluster
 #On commence alors par l'année 2017
@@ -331,7 +327,6 @@ plt.show
 plt.pie(spanish_speaking2020['Comptabilisation du nombre de top10'], labels=spanish_speaking2020['Genre'])
 plt.title('Distribution des genres du cluster "spanish speaking" en 2020')
 plt.show
-
 
 ################Q3
 dat = dat.sort_values(by=['Popularity'], ascending=[True])
