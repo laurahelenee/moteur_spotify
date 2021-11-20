@@ -374,3 +374,62 @@ value_count_filtered_dat_bytop10_FR = filtered_dat_bytop10_FR['Artist'].value_co
 
 value_count_filtered_dat_bytop50_FR.head(10)
 value_count_filtered_dat_bytop10_FR.head(10)
+
+#########Q4
+dt = pd.read_csv("/Users/rcanivez/Documents/Database to calculate popularity.csv")
+
+
+#on va tout d'abord filtrer la base de données Databse to calculate popularity de façon à ne conserver 
+#que le classement global qui nous concerne dans cette question.
+dt_2=dt['country']=='Global'
+dt_global = dt[dt_2]
+
+value_count_dt_global = dt_global['track'].value_counts()
+#on dénombre ensuite le nombre d'occurences de chacune des tracks dans cette base de données : ainsi, si une chanson 
+#obtiendra une valeur de 100, elle aura passé 100 jours dans le classement global vu qu'une ligne correspond à une journée
+#on privilégie la colonne "track" et non "title" car plusieurs titres peuvent avoir le même titre ce qui est impossible 
+#dans le cas de la colonne "track"
+
+value_count_dt_global.head(1)
+#on affiche premier de ce classement : ce sera donc la chanson qui aura placé le plus de temps dans le classement Global
+
+##Partie Graphique
+
+#pour réaliser le graphique, on va notre base de données qui ne contient que le classement global de telle sorte à ne 
+#conserver que les classement de la chanson numéro un précédemment : shape of you de Ed Sheeran
+#pour la localiser, on utilise le lien spotify qui permet d'obtenir cette chanson.
+dt_global_2=dt_global['uri']=='https://open.spotify.com/track/7qiZfU4dY1lWllzX7mPBI3'
+dt_global_shapeofyou = dt_global[dt_global_2]
+dt_global_shapeofyou
+
+#ensuite je réalise un tri des colonnes de sorte à avoir uniquement les colonnes date et position 
+#qui sont celles qui me seront nécessaires pour la réalisation de ce graphique
+dt_global_shapeofyou_2 = pd.DataFrame(dt_global_shapeofyou)
+dt_global_shapeofyou_2.drop(dt_global_shapeofyou_2.iloc[:,0:2],1,inplace=True)
+dt_global_shapeofyou_2
+
+dt_global_shapeofyou_3 = pd.DataFrame(dt_global_shapeofyou_2)
+dt_global_shapeofyou_3.drop(dt_global_shapeofyou_3.iloc[:,2:6],1,inplace=True)
+dt_global_shapeofyou_3
+
+#on transforme tout cela en un nouveau fichier csv
+dt_global_shapeofyou_3.to_csv('graphiqueQ4.csv')
+
+#A partir de ce ficher csv nouvellement créee, on peut réaliser un basic plot 
+import matplotlib.pyplot as plt
+import pandas as pd
+
+graph = pd.read_csv('graphiqueQ4.csv')
+
+plt.figure(figsize=(20, 12))
+x = range(len(graph['date']))
+plt.plot(x, graph['position'])
+plt.xticks(x, graph['date'])
+plt.xlabel('date')
+plt.ylabel('position')
+
+#On inverse ensuite les deux axes pour avoir une évolution chronologique
+plt.gca().invert_xaxis()
+plt.gca().invert_yaxis()
+plt.title('Evolution de Shape of you dans le classement global durant la période')
+plt.show()
