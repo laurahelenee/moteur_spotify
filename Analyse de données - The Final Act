@@ -257,6 +257,82 @@ plt.pie(global2019['Comptabilisation du nombre de top10'], labels=global2019['Ge
 plt.title('Distribution des genres du cluster "global" en 2019')
 plt.show
 
+filtered_dt_dat5=filtered_dt_dat['date']==str(2020)
+filtered_dt_dat2020 = filtered_dt_dat[filtered_dt_dat5]
+filtered_dt_dat2020
+#on crée différentes dataframes dans lesquelles on enregistre respectivement toutes les chansons classées
+#d'une certaine année
+
+dt_dat['Cluster'].value_counts()
+#Cela nous permet de savoir que les zones géographiques sont séparés en 4 clusters : spanish speaking / english speaking
+#and nordic / southern europe and portuguese heritage et global
+
+#On doit donc séparer chacune de ces dataframes en fonction de leur cluster
+#On commence alors par l'année 2017
+filtered_dt_dat2020_2=filtered_dt_dat2020['Cluster']==str('spanish speaking')
+filtered_dt_dat2020_spanisk_speaking = filtered_dt_dat2020[filtered_dt_dat2020_2]
+filtered_dt_dat2020_spanisk_speaking
+
+filtered_dt_dat2020_3=filtered_dt_dat2020['Cluster']==str('english speaking and nordic')
+filtered_dt_dat2020_english_speaking_and_nordic = filtered_dt_dat2020[filtered_dt_dat2020_3]
+filtered_dt_dat2020_english_speaking_and_nordic
+
+filtered_dt_dat2020_4=filtered_dt_dat2020['Cluster']==str('southern europe and portuguese heritage')
+filtered_dt_dat2020_southern_europe_and_portuguese_heritage = filtered_dt_dat2020[filtered_dt_dat2020_4]
+filtered_dt_dat2020_southern_europe_and_portuguese_heritage
+
+filtered_dt_dat2020_5=filtered_dt_dat2020['Cluster']==str('global')
+filtered_dt_dat2020_global = filtered_dt_dat2020[filtered_dt_dat2020_5]
+filtered_dt_dat2020_global
+
+spanish_speaking2020 = filtered_dt_dat2020_spanisk_speaking['Genre'].value_counts().to_frame().reset_index()
+english_speaking_and_nordic2020 = filtered_dt_dat2020_english_speaking_and_nordic['Genre'].value_counts().to_frame().reset_index()
+southern_europe_and_portuguese_heritage2020 = filtered_dt_dat2020_southern_europe_and_portuguese_heritage['Genre'].value_counts().to_frame().reset_index()
+global2020 = filtered_dt_dat2020_global['Genre'].value_counts().to_frame().reset_index()
+#on enregistre alors dans de nouvelles variables le dénombrement de l'occurence de chaque genre dans chacun des documents 
+#en faisant cela, on va voir quels sont les genres qui ont le plus de titres passées dans le top10 pour chaque cluster.
+
+spanish_speaking2020.rename(columns={'Genre': 'Comptabilisation du nombre de top10'}, inplace=True)
+spanish_speaking2020.rename(columns={'index': 'Genre'}, inplace=True)
+spanish_speaking2020
+
+english_speaking_and_nordic2020.rename(columns={'Genre': 'Comptabilisation du nombre de top10'}, inplace=True)
+english_speaking_and_nordic2020.rename(columns={'index': 'Genre'}, inplace=True)
+english_speaking_and_nordic2020
+
+southern_europe_and_portuguese_heritage2020.rename(columns={'Genre': 'Comptabilisation du nombre de top10'}, inplace=True)
+southern_europe_and_portuguese_heritage2020.rename(columns={'index': 'Genre'}, inplace=True)
+southern_europe_and_portuguese_heritage2020
+
+global2020.rename(columns={'Genre': 'Comptabilisation du nombre de top10'}, inplace=True)
+global2020.rename(columns={'index': 'Genre'}, inplace=True)
+global2020
+#on modifie
+
+global2020=global2020.head(10)
+southern_europe_and_portuguese_heritage2020 = southern_europe_and_portuguese_heritage2020.head(10)
+english_speaking_and_nordic2020 = english_speaking_and_nordic2020.head(10)
+spanish_speaking2020 = spanish_speaking2020.head(10)
+
+import matplotlib.pyplot as plt
+
+plt.pie(english_speaking_and_nordic2020['Comptabilisation du nombre de top10'], labels=english_speaking_and_nordic2020['Genre'])
+plt.title('Distribution des genres du cluster "english speaking" en 2020')
+plt.show
+
+plt.pie(global2020['Comptabilisation du nombre de top10'], labels=global2020['Genre'])
+plt.title('Distribution des genres du cluster "global" en 2020')
+plt.show
+
+plt.pie(southern_europe_and_portuguese_heritage2020['Comptabilisation du nombre de top10'], labels=southern_europe_and_portuguese_heritage2020['Genre'])
+plt.title('Distribution des genres du cluster "southern europe and portuguese" en 2020')
+plt.show
+
+plt.pie(spanish_speaking2020['Comptabilisation du nombre de top10'], labels=spanish_speaking2020['Genre'])
+plt.title('Distribution des genres du cluster "spanish speaking" en 2020')
+plt.show
+
+
 ################Q3
 dat = dat.sort_values(by=['Popularity'], ascending=[True])
 #on trie notre document par ordre décroissant pour que les titres les plus populaires soient en haut du document
