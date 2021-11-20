@@ -1,0 +1,126 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Mon Nov 15 17:16:50 2021
+
+Ce module ayant pour sujet l'application de streaming Spotify regroupe 5 quêtes,
+dont une quête "surprise" qui a pour but de trouver le meilleur classement d'une chanson
+sortie pour un jour d'anniversaire (par exemple)
+
+"""
+#Préparation des données 
+
+#Importation des modules nécessaires à la manipulation des fonctions
+import pandas as pd
+
+#Lecture des fichiers utiles csv en dataframe
+spotify = pd.read_csv("D:/DM_Spotify/Final database.csv",sep=",", low_memory=False)
+popu = pd.read_csv("D:/DM_Spotify/Database to Calculate popularity.csv",sep=",")
+
+#Merge des deux dataframes
+#On crée une nouvelle dataframe, nommée dop qui va conserver certaines colonnes
+dop=pd.DataFrame(spotify)
+dop.drop(dop.iloc[:,15:147],1,inplace=True) #je garde que jusqu'à popu_max pour pouvoir l'utiliser
+
+#Renommer les colonnes, par souci de majuscules/miniscules
+popu.rename(columns={"uri": "Uri"}, inplace=True)
+popu.rename(columns={"country": "Country"}, inplace=True)
+
+#On merge sur la gauche les deux dataframes
+output2 = pd.merge(popu, dop,  
+                   on=['Country','Uri'],  
+                   how='left') 
+
+#On garde que les derniers chiffres pour la date
+output2['date']=output2['date'].str[-4:]
+
+"""
+Les quêtes 
+
+"""
+def quete1(titre,artiste): #Definition de la fonction et des termes à entrer dans la fonction
+    
+    #Création des inputs à mettre dans la formule
+    
+    #titre = input("Titre :")
+    #artiste = input("Artiste :")
+    
+    #Boucle if pour vérifier si c'est dans la base de données
+    
+    if titre in list(output2.Title) and artiste in list(output2.Artist): #Si le titre au final est classé dans la base de données
+        quete1=output2.loc[(output2['Title']==titre) & (output2['Artist']==artiste)] #On localise dans la dataframe
+        quete1=quete1.sort_values(by=['Popu_max'], ascending=[True]) #On trie par truc maximum
+        quete1=quete1.drop(columns=['Unnamed: 0','Uri','track','Album/Single','Explicit','Genre','Top10_dummy','Top50_dummy','Cluster','danceability','energy','Release_date'])
+        print(quete1.head(1))
+        pays = list(quete1['Country'])
+        country = []
+        for i in pays:
+            if i not in country:
+                country.append(i)
+        country.sort()
+        print(str(country).strip('[]')) 
+        if 'Global' in country:
+            print ("\n" + "La chanson a été classée mondialement")
+            return quete1.head(1), str(country).strip('[]'), "La chanson a été classée mondialement"
+        else: 
+            print("\n" +"La chanson n'a pas été classée mondialement")
+            return quete1.head(1), str(country).strip('[]'), "La chanson n'a pas été classée mondialement"
+    else: 
+        print("La quête n'est pas disponible dans la base de données")
+        return "La quête n'est pas disponible dans la base de données"
+
+
+
+def quete2(artiste,pays,date):
+    #artiste = input("Artiste : ")
+    #pays = input("Pays : ")
+    #date = input("Année : ")
+    
+    if artiste in list(output2.Artist) and pays in list(output2.Country) and date in list(output2.date):
+        quete2=output2.loc[(output2['Artist']==artiste) & (output2['Country']==pays) &(output2['date']==date)]
+        quete2=quete2.sort_values(by=['Popularity'], ascending=[False])
+        title = list(quete2['Title'])
+        titre = []
+        for i in title:
+            if i not in titre:
+                titre.append(i)
+        titre.sort()
+        print("La liste des chansons qui ont été classés est la suivante : " +str(titre).strip('[]')) 
+        print("La chanson a donc été classée " + str(len(titre)) + " fois en " + str(date) + " en " + str(pays))
+        mycolumns = ['Title','Album/Single','Popularity']
+        print(quete2[mycolumns].drop_duplicates())
+        
+        return "La liste des chansons qui ont été classés est la suivante : " +str(titre).strip('[]'), "La chanson a donc été classée " + str(len(titre)) + " fois en " + str(date) + " en " + str(pays), quete2[mycolumns].drop_duplicates() 
+    
+    else: 
+        print("La quête n'est pas disponible dans la base de données")
+        return "La quête n'est pas disponible dans la base de données"
+
+
+
+def quete3(genre,pays,annee):
+    
+   # genre= input("Genre (en minuscules) :")
+    #pays= input("Pays :")
+    #annee= input("Année :")
+    
+    if genre in list(output2.Genre) and pays in list(output2.Country) and annee in list(output2.date):
+        quete3=output2.loc[(output2['Genre']==genre) & (output2['Country']==pays) & (output2['date']==annee)]
+        quete3=quete3.sort_values(by=['Popularity'], ascending=[False])
+        quete3=quete3.drop_duplicates(subset="Title") #suppression des doublons 
+        mycolumns=["position","title","artist"]
+        print("Les 10 chansons les plus populaires pour le genre " + genre +  " lors de l'année " + str(annee) + " sont les suivants" )
+        print(quete3[mycolumns].head(10))
+        quete3pt2=quete3.sort_values(by=['Popularity'], ascending=[False])
+        quete3pt2=quete3pt2.drop_duplicates(subset="Artist")
+        mycolumn=["artist","Artist_followers"]
+        print("Les 10 artistes les plus populaires pour le genre " + genre +  " lors de l'année " + str(annee) + " sont les suivants")
+        print(quete3pt2[mycolumn].head(10))
+        return "Les 10 chansons les plus populaires pour le genre " + genre +  " lors de l'année " + str(annee) + " sont les suivants", quete3[mycolumns].head(10), "Les 10 artistes les plus populaires pour le genre " + genre +  " lors de l'année " + str(annee) + " sont les suivants", quete3pt2[mycolumn].head(10)
+    else: 
+        print("La quête n'est pas disponible dans la base de données")
+        return "La quête n'est pas disponible dans la base de données"
+
+
+
+
+
