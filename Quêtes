@@ -75,10 +75,7 @@ def quete1(titre,artiste):
 
 #quete 2 
 def quete2(artiste,pays,date):
-    #artiste = artiste.lower()
-    #si le nom est de type str on applique la fonction .lower(), s'il ne l'est pas on peut pas l'appliquer et ça n'a pas de sens de convertir en str pour .lower() les noms avec des caracteres spéciaux
-    
-            
+  
     if artiste in list(output2.Artist) and pays in list(output2.Country) and date in list(output2.date):
                 
         quete2=output2.loc[(output2['Artist']==artiste) & (output2['Country']==pays) &(output2['date']==date)]
