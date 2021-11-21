@@ -1,8 +1,12 @@
 #########Q1
 
 import pandas as pd
-dat = pd.read_csv("/Users/rcanivez/Documents/Final database.csv")
-dat
+chemin = input("Entrez le chemin allant de la source à Final database.csv : ")
+dat = pd.read_csv(chemin)
+
+chemin2 = input("Entrez le chemin allant de la source à Database to calculate popularity.csv : ")
+dt = pd.read_csv(chemin2)
+
 
 datQ1 = pd.DataFrame(dat)
 dat.drop(datQ1.iloc[:,5:10],1,inplace=True)
@@ -287,10 +291,6 @@ plt.plot
 
 
 ######Q2 
-dt = pd.read_csv("/Users/rcanivez/Documents/Database to calculate popularity.csv")
-dat = pd.read_csv("/Users/rcanivez/Documents/Final database.csv")
-#on crée deux dataframes dans lesquelles on enregistre nos deux bases de données 
-
 
 dat2 = pd.DataFrame(dat)
 dat2.drop(dat2.iloc[:,10:150],1,inplace=True)
@@ -657,8 +657,6 @@ value_count_filtered_dat_bytop50_FR.head(10)
 value_count_filtered_dat_bytop10_FR.head(10)
 
 #########Q4
-dt = pd.read_csv("/Users/rcanivez/Documents/Database to calculate popularity.csv")
-
 
 #on va tout d'abord filtrer la base de données Databse to calculate popularity de façon à ne conserver 
 #que le classement global qui nous concerne dans cette question.
