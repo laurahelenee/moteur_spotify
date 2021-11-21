@@ -7,7 +7,7 @@ import pandas as pd
 
 #Lecture des fichiers utiles csv en dataframe
 chemin3 = input("Entrez le chemin allant de la source à Final database.csv : ")
-spotify = pd.read_csv(chemin3,sep=",", low_memory=False)
+spotify = pd.read_csv("chemin3",sep=",", low_memory=False)
 
 chemin4 = input("Entrez le chemin allant de la source à Database to calculate popularity.csv : ")
 popu = pd.read_csv(chemin4)
@@ -198,7 +198,6 @@ def quete4(artiste):
 
 
 
-
 #extension quete4
 def quete4bis(artiste, pays):
 
@@ -222,9 +221,11 @@ def quete4bis(artiste, pays):
     #on transforme ce qui est saisi en minuscules
     artiste_min = artiste.lower()
     if artiste_min in artist_minuscules and pays in Pays:
+        dot_quete4=spotify['Album/Single']=='album' #dot_quete4 est une colonne qui retourne des False ou True selon si la condition est réalisée ou pas
+        doti_quete4 = spotify[dot_quete4]
         dotii_quete4=doti_quete4['Country']== pays #doti_quete4 a 93703 lignes 
-        dotiii_quete4 = doti_quete4[dotii_quete4] #dotiii_quete4 a 4665 lignes car on a gardÃ© que le pays qu'on cherche
-            
+        dotiii_quete4 = doti_quete4[dotii_quete4] 
+        
         dofi = dotiii_quete4.groupby(['Album']).sum().reset_index() 
             #on fait la somme des popu pour chaque album
             
@@ -270,6 +271,8 @@ def quete4bis(artiste, pays):
         
     else:
         return "L'artiste et/ou le pays n'est pas dans la base de donnée."
+
+
 
 
 
