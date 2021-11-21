@@ -287,8 +287,6 @@ plt.plot
 
 
 ######Q2 
-import pandas as pd
-
 dt = pd.read_csv("/Users/rcanivez/Documents/Database to calculate popularity.csv")
 dat = pd.read_csv("/Users/rcanivez/Documents/Final database.csv")
 #on crée deux dataframes dans lesquelles on enregistre nos deux bases de données 
@@ -622,11 +620,11 @@ dat = dat.sort_values(by=['Popularity'], ascending=[True])
 
 #on se base sur un dot trié par popularité mais ça a aucune incidence sur le résultat final -> on peut en changer.
 dat_q3=dat['Top50_dummy']==1.0
-filtered_dat_bytop50 = dot[dat_q3]
+filtered_dat_bytop50 = dat[dat_q3]
 filtered_dat_bytop50
 
 dat_q3_2=dat['Top10_dummy']==1.0
-filtered_dat_bytop10 = dot[dat_q3_2]
+filtered_dat_bytop10 = dat[dat_q3_2]
 filtered_dat_bytop10
 #on ne conserve que les données du document global qui ont déjà atteint le top50 puis le top10 tous classements confondus
 
