@@ -85,7 +85,6 @@ def quete2(artiste,pays,date):
         for i in title:
             if i not in titre:
                 titre.append(i)
-        titre.sort()
         if len(titre) == 1 :
             a = "{} des chansons de l'artiste a été classée dans ce pays en {}".format(len(titre), date)
             b = "La chanson qui a été classée est la suivante : " +str(titre).strip('[]')
