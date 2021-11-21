@@ -272,3 +272,17 @@ def quete4bis(artiste, pays):
 
 
 
+def quetebonus(releasedate):
+    output2['Release_date']=output2['Release_date'].str[:4] #on ne conserve que l'année
+
+    if releasedate in list(output2.Release_date):
+        quetebonus=output2.loc[(output2['Release_date']==releasedate)]
+        quetebonus=quetebonus.sort_values(by=['Popularity'], ascending=[False])
+        mycols = ['title','artist','Popu_max','Country']
+        queteebonus = quetebonus[mycols].drop_duplicates()
+        return queteebonus.head(5)
+              
+    else:
+        return "Aucun titre publié le jour de votre anniversaire n'a été classé dans notre classement :/"
+
+
