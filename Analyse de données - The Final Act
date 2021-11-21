@@ -437,7 +437,7 @@ filtered_dt_dat2018_global = filtered_dt_dat2018[filtered_dt_dat2018_5]
 filtered_dt_dat2018_global
 
 
-spanish_speaking2018 = filtered_dt_dat2018_spanis_speaking['Genre'].value_counts().to_frame().reset_index()
+spanish_speaking2018 = filtered_dt_dat2018_spanish_speaking['Genre'].value_counts().to_frame().reset_index()
 english_speaking_and_nordic2018 = filtered_dt_dat2018_english_speaking_and_nordic['Genre'].value_counts().to_frame().reset_index()
 southern_europe_and_portuguese_heritage2018 = filtered_dt_dat2018_southern_europe_and_portuguese_heritage['Genre'].value_counts().to_frame().reset_index()
 global2018 = filtered_dt_dat2018_global['Genre'].value_counts().to_frame().reset_index()
