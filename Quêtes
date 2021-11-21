@@ -6,8 +6,11 @@
 import pandas as pd
 
 #Lecture des fichiers utiles csv en dataframe
-spotify = pd.read_csv("Final database.csv",sep=",", low_memory=False)
-popu = pd.read_csv("Database to Calculate popularity.csv",sep=",")
+chemin3 = input("Entrez le chemin allant de la source à Final database.csv : ")
+spotify = pd.read_csv("chemin3",sep=",", low_memory=False)
+
+chemin4 = input("Entrez le chemin allant de la source à Database to calculate popularity.csv : ")
+popu = pd.read_csv(chemin4)
 
 #Merge des deux dataframes
 #On crée une nouvelle dataframe, nommée dop qui va conserver certaines colonnes
