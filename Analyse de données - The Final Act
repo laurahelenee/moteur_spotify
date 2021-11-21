@@ -349,8 +349,8 @@ dt_dat['Cluster'].value_counts()
 #On doit donc séparer chacune de ces dataframes en fonction de leur cluster
 #On commence alors par l'année 2017
 filtered_dt_dat2017_2=filtered_dt_dat2017['Cluster']==str('spanish speaking')
-filtered_dt_dat2017_spanisk_speaking = filtered_dt_dat2017[filtered_dt_dat2017_2]
-filtered_dt_dat2017_spanisk_speaking
+filtered_dt_dat2017_spanish_speaking = filtered_dt_dat2017[filtered_dt_dat2017_2]
+filtered_dt_dat2017_spanish_speaking
 
 filtered_dt_dat2017_3=filtered_dt_dat2017['Cluster']==str('english speaking and nordic')
 filtered_dt_dat2017_english_speaking_and_nordic = filtered_dt_dat2017[filtered_dt_dat2017_3]
@@ -364,7 +364,7 @@ filtered_dt_dat2017_5=filtered_dt_dat2017['Cluster']==str('global')
 filtered_dt_dat2017_global = filtered_dt_dat2017[filtered_dt_dat2017_5]
 filtered_dt_dat2017_global
 
-spanish_speaking2017 = filtered_dt_dat2017_spanisk_speaking['Genre'].value_counts().to_frame().reset_index()
+spanish_speaking2017 = filtered_dt_dat2017_spanish_speaking['Genre'].value_counts().to_frame().reset_index()
 english_speaking_and_nordic2017 = filtered_dt_dat2017_english_speaking_and_nordic['Genre'].value_counts().to_frame().reset_index()
 southern_europe_and_portuguese_heritage2017 = filtered_dt_dat2017_southern_europe_and_portuguese_heritage['Genre'].value_counts().to_frame().reset_index()
 global2017 = filtered_dt_dat2017_global['Genre'].value_counts().to_frame().reset_index()
@@ -424,7 +424,7 @@ filtered_dt_dat2018
 
 
 filtered_dt_dat2018_2=filtered_dt_dat2018['Cluster']==str('spanish speaking')
-filtered_dt_dat2018_spanisk_speaking = filtered_dt_dat2018[filtered_dt_dat2018_2]
+filtered_dt_dat2018_spanish_speaking = filtered_dt_dat2018[filtered_dt_dat2018_2]
 
 filtered_dt_dat2018_3=filtered_dt_dat2018['Cluster']==str('english speaking and nordic')
 filtered_dt_dat2018_english_speaking_and_nordic = filtered_dt_dat2018[filtered_dt_dat2018_3]
@@ -437,7 +437,7 @@ filtered_dt_dat2018_global = filtered_dt_dat2018[filtered_dt_dat2018_5]
 filtered_dt_dat2018_global
 
 
-spanish_speaking2018 = filtered_dt_dat2018_spanisk_speaking['Genre'].value_counts().to_frame().reset_index()
+spanish_speaking2018 = filtered_dt_dat2018_spanis_speaking['Genre'].value_counts().to_frame().reset_index()
 english_speaking_and_nordic2018 = filtered_dt_dat2018_english_speaking_and_nordic['Genre'].value_counts().to_frame().reset_index()
 southern_europe_and_portuguese_heritage2018 = filtered_dt_dat2018_southern_europe_and_portuguese_heritage['Genre'].value_counts().to_frame().reset_index()
 global2018 = filtered_dt_dat2018_global['Genre'].value_counts().to_frame().reset_index()
@@ -487,7 +487,7 @@ filtered_dt_dat2019 = filtered_dt_dat[filtered_dt_dat3]
 filtered_dt_dat2019
 
 filtered_dt_dat2019_2=filtered_dt_dat2019['Cluster']==str('spanish speaking')
-filtered_dt_dat2019_spanisk_speaking = filtered_dt_dat2019[filtered_dt_dat2019_2]
+filtered_dt_dat2019_spanish_speaking = filtered_dt_dat2019[filtered_dt_dat2019_2]
 
 filtered_dt_dat2019_3=filtered_dt_dat2019['Cluster']==str('english speaking and nordic')
 filtered_dt_dat2019_english_speaking_and_nordic = filtered_dt_dat2019[filtered_dt_dat2019_3]
@@ -499,7 +499,7 @@ filtered_dt_dat2019_5=filtered_dt_dat2019['Cluster']==str('global')
 filtered_dt_dat2019_global = filtered_dt_dat2019[filtered_dt_dat2019_5]
 filtered_dt_dat2019_global
 
-spanish_speaking2019 = filtered_dt_dat2019_spanisk_speaking['Genre'].value_counts().to_frame().reset_index()
+spanish_speaking2019 = filtered_dt_dat2019_spanish_speaking['Genre'].value_counts().to_frame().reset_index()
 english_speaking_and_nordic2019 = filtered_dt_dat2019_english_speaking_and_nordic['Genre'].value_counts().to_frame().reset_index()
 southern_europe_and_portuguese_heritage2019 = filtered_dt_dat2019_southern_europe_and_portuguese_heritage['Genre'].value_counts().to_frame().reset_index()
 global2019 = filtered_dt_dat2019_global['Genre'].value_counts().to_frame().reset_index()
@@ -552,8 +552,8 @@ filtered_dt_dat2020
 #On doit donc séparer chacune de ces dataframes en fonction de leur cluster
 #On commence alors par l'année 2017
 filtered_dt_dat2020_2=filtered_dt_dat2020['Cluster']==str('spanish speaking')
-filtered_dt_dat2020_spanisk_speaking = filtered_dt_dat2020[filtered_dt_dat2020_2]
-filtered_dt_dat2020_spanisk_speaking
+filtered_dt_dat2020_spanish_speaking = filtered_dt_dat2020[filtered_dt_dat2020_2]
+filtered_dt_dat2020_spanish_speaking
 
 filtered_dt_dat2020_3=filtered_dt_dat2020['Cluster']==str('english speaking and nordic')
 filtered_dt_dat2020_english_speaking_and_nordic = filtered_dt_dat2020[filtered_dt_dat2020_3]
@@ -567,7 +567,7 @@ filtered_dt_dat2020_5=filtered_dt_dat2020['Cluster']==str('global')
 filtered_dt_dat2020_global = filtered_dt_dat2020[filtered_dt_dat2020_5]
 filtered_dt_dat2020_global
 
-spanish_speaking2020 = filtered_dt_dat2020_spanisk_speaking['Genre'].value_counts().to_frame().reset_index()
+spanish_speaking2020 = filtered_dt_dat2020_spanish_speaking['Genre'].value_counts().to_frame().reset_index()
 english_speaking_and_nordic2020 = filtered_dt_dat2020_english_speaking_and_nordic['Genre'].value_counts().to_frame().reset_index()
 southern_europe_and_portuguese_heritage2020 = filtered_dt_dat2020_southern_europe_and_portuguese_heritage['Genre'].value_counts().to_frame().reset_index()
 global2020 = filtered_dt_dat2020_global['Genre'].value_counts().to_frame().reset_index()
