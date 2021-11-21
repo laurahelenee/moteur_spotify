@@ -6,7 +6,7 @@ dat = pd.read_csv(chemin)
 
 chemin2 = input("Entrez le chemin allant de la source à Database to calculate popularity.csv : ")
 dt = pd.read_csv(chemin2)
-
+#on crée deux dataframes dans lesquelles on enregistre nos deux bases de données 
 
 datQ1 = pd.DataFrame(dat)
 dat.drop(datQ1.iloc[:,5:10],1,inplace=True)
